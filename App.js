@@ -14,13 +14,25 @@ export default class Aoo extends Component {
         displayValue: '0'
     }
 
+    addDigit = n => {
+        this.setState({ displayValue: n })
+    }
+
+    clearMemory = () => {
+        this.setState({ displayValue: 0 })
+    }
+
+    setOperation = operation => {
+
+    }
+
     reder(){
         return(
             <View style={styles.container}>
                 <Display value={this.state.displayValue} />
                 <View style={styles.buttons}>
-                    <Button label='AC' />
-                    <Button label='/' />
+                    <Button label='AC' triple onClick={this.clearMemory} />
+                    <Button label='/' operation onClick={() => this.setOperation('/')}/>
                     <Button label='7' />
                     <Button label='8' />
                     <Button label='9' />
