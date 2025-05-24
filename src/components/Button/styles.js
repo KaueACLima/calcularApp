@@ -3,9 +3,12 @@ import {
     Dimensions
 } from 'react'
 
+
+
+
 export const style = StyleSheet.create({
     button: {
-        fontSize: 40,
+        fontize: 40,
         height: Dimensions.get('window').width / 4,
         width: Dimensions.get('window').width / 4,
         padding: 20,
