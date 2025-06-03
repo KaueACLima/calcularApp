@@ -21,11 +21,13 @@ export default class Aoo extends Component {
     state = { ...initialState }
 
     addDigit = n => {
+
+        const clarDisplay = this.state.displayValue === '0' || this.state.clarDisplay
+
         if(n === '.' && this.state.displayValue.includes('0')){
             return
         }
 
-        const clarDisplay = this.state.displayValue === '0' || this.state.clarDisplay
         const currentDisplay = clarDisplay ? '' : this.state.displayValue
         const displayValue = currentValue + n
 
@@ -38,16 +40,37 @@ export default class Aoo extends Component {
             const newValue = parseFloat(displayValue)
             const values = [ ...this.state.values]
             values[this.state.current] = newValue
+            this.setState({ values })
         }
 
     }
 
     clearMemory = () => {
-        this.setState({ displayValue: 0 })
+        this.setState({ ...initialState })
     }
 
     setOperation = operation => {
+        if(this.state.current === 0) {
+            this.setState({ operation, current: 1, clearMemory: true})
+        } else {
+            const equals = operation === '='
+            const values = [...this.state.values]
+            try {
+                values[0] = eval(`${values[0]} ${this.state.operation} ${values[1]}`)
+            } catch (e) {
+                values[0] = this.state.values[0]
+            }
 
+            values[1] = 0
+            this.state({
+                displayValue: `${values[0]}`,
+                operation: equals ? null : operation,
+                current: equals ? 0 : 1,
+                clearDisplay: !equals,
+                //clearDisplay: true,
+                values,
+            })
+        }
     }
 
     reder(){
